@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Page Title')}"></head>
+<body class="bg-light">
+<div th:replace="~{fragments/nav :: navbar}"></div>
+
+<div class="container mt-4">
+    <h2>Welcome to Meeting Manager</h2>
+    <!-- Status Alert Banner -->
+    <div th:if="${message}" class="alert alert-info alert-dismissible fade show" role="alert">
+        <span th:text="${message}">Status message here</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="row m-1 mt-3 mb-4">
+        <!-- Create Meeting Card -->
+        <div class="col-md-6 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Create Meeting</h5>
+                    <form action="/create-meeting" method="post">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="title" placeholder="Title" required>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" name="description" placeholder="Description"
+                                      required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <input type="datetime-local" class="form-control" name="startTime" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="datetime-local" class="form-control" name="endTime" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="number" step="any" class="form-control" name="lat" placeholder="Latitude"
+                                   required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="number" step="any" class="form-control" name="lon" placeholder="Longitude"
+                                   required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Meeting</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create User Card -->
+        <div class="col-md-6 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Create User</h5>
+                    <form action="/create-user" method="post">
+                        <div class="mb-3">
+                            <input type="email" class="form-control" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="name" placeholder="Full Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="number" class="form-control" name="age" placeholder="Age" required>
+                        </div>
+                        <div class="mb-3">
+                            <select class="form-control" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create User</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row m-1 mt-4">
+        <!-- Find Nearby-->
+        <div class="col-md-6 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Find Nearby Meetings</h5>
+                    <form action="/active-meetings" method="get">
+                        <div class="mb-3">
+                            <input type="number" step="any" class="form-control" placeholder="Latitude" name="lat"
+                                   required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="number" step="any" class="form-control" placeholder="Longitude" name="lng"
+                                   required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Join Meeting Card -->
+        <div class="col-md-6 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Join a Meeting</h5>
+                    <form action="/join" method="post">
+                        <div class="mb-3">
+                            <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="meetingId" placeholder="Meeting ID" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Join</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leave Meeting Card -->
+        <div class="col-md-6 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Leave a Meeting</h5>
+                    <form action="/leave" method="post">
+                        <div class="mb-3">
+                            <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="meetingId" placeholder="Meeting ID" required>
+                        </div>
+                        <button type="submit" class="btn btn-warning">Leave</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- End Meeting Card -->
+        <div class="col-md-6 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">End a Meeting</h5>
+                    <form action="/end" method="post">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="meetingId" placeholder="Meeting ID" required>
+                        </div>
+                        <button type="submit" class="btn btn-danger">End</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: scripts}"></div>
+<script>
+
+    // Store email in local storage to avoid re-entering
+    const emailInput = document.getElementById('email');
+
+    // Restore email from localStorage if available
+    if(localStorage.getItem('email')) {
+        emailInput.value = localStorage.getItem('email');
+    }
+
+    // Save email to localStorage when form is submitted
+    document.querySelector('form').addEventListener('submit', function() {
+        localStorage.setItem('email', emailInput.value);
+    });
+</script>
+</body>
+</html>

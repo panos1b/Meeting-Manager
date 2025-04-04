@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Page Title')}"></head>
+<body class="bg-light">
+<header th:replace="~{fragments/nav :: navbar}"></header>
+
+<main class="container my-5">
+    <h2 class="mb-4">Active Meetings</h2>
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Meeting Results</h5>
+                </div>
+                <div class="card-body">
+                    <div th:if="${meetings.empty}" class="alert alert-info">
+                        No active meetings found.
+                    </div>
+                    <div th:unless="${meetings.empty}" class="list-group list-group-flush">
+                        <div th:each="meeting : ${meetings}" class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                <div>
+                                    <a class="text-decoration-none text-dark">
+                                        <h5 class="mb-1" th:text="${meeting.title}">Meeting Title</h5>
+                                    </a>
+                                    <small th:text="${#temporals.format(meeting.startTime, 'MMMM d, yyyy ''at'' h:mm a')}">Start
+                                        Time</small>
+                                    <p class="mb-1" th:text="${meeting.description}">Meeting Description</p>
+                                    <div class="d-flex justify-content-between small gap-1">
+                                        <span>Id: <span th:text="${meeting.meetingID}">ID</span></span>
+                                        <span>| Ends: <span
+                                                th:text="${#temporals.format(meeting.endTime, 'MMMM d, yyyy ''at'' h:mm a')}">
+                                            End Time
+                                        </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <a class="btn btn-sm btn-outline-primary ms-3"
+                                   th:href="@{/chat(meetingID=${meeting.meetingID})}">
+                                    Chat
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: scripts}"></footer>
+</body>
+</html>
