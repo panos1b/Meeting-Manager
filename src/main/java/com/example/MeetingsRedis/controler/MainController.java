@@ -2,27 +2,26 @@ package com.example.MeetingsRedis.controler;
 
 import com.example.MeetingsRedis.model.*;
 import com.example.MeetingsRedis.tasks.RedisRefresh;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import org.intellij.lang.annotations.RegExp;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import redis.clients.jedis.Jedis;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.concurrent.ExecutionException;
 
 import static com.example.MeetingsRedis.model.RedisDataAccess.*;
 
@@ -153,7 +152,7 @@ public class MainController {
             RedisRefresh.refreshActiveMeetings(); // manual refresh for no delays as it might have started
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        };
+        }
 
         redirectAttributes.addFlashAttribute("message", "Meeting '" + title + "' created successfully!");
 
