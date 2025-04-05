@@ -26,6 +26,7 @@ room is available for participants to communicate.
 - **Cold Store**: SQLite is used for long term data storage.
 
 ## Setup Instructions
+#### Run Sequence
 
 1. **Install Redis Community Edition**  
    Ensure that the Redis server is installed and running.
@@ -37,10 +38,16 @@ room is available for participants to communicate.
    ```
 
 3. **Access the Application**  
-   Open a web browser and navigate to [http://localhost](http://localhost).
+   Open a web browser and navigate to [localhost](http://localhost:8080).
     - The index page will display forms for creating meetings and users, joining or leaving meetings, finding nearby meetings, and ending meetings.
     - The meeting page provides a list of active meeting.
     - The chat page provides an interface for sending and viewing messages during an active meeting.
+   
+#### Shutdown Sequence
+Even if you don't terminate Redis you **must** allow the shutdown sequence of Spring Boot to complete after
+ending the build. If you don't you might encounter errors with the logs both in the Database and in Redis.
+If this happens just run `FLUSHALL` in a redis terminal connected to your redis server. 
+WARNING THIS WILL DELETE ALL REDIS KEY - VALUES! Some logs will be permanently lost.
 
 ## Project Context
 
@@ -49,13 +56,13 @@ of the [Big Data Management Systems](https://www.dept.aueb.gr/en/dmst/content/bi
 
 ## Licencing
 
-- Unless otherwise stated all of this repository is covered by the EUROPEAN UNION PUBLIC LICENCE v. 1.2
+- Unless otherwise stated all of this repository's code is covered by the EUROPEAN UNION PUBLIC LICENCE v. 1.2
 - My permanent address is in Greece, so as per EUPL v1.2 the governing law is the Greek law
 
 ## Limitations
 Keep in mind the goal of this project is to use Redis. You should understand that everything else is treated as an
 afterthought. This is why the frontend is plain, the MVC framework loosely followed, 
-simple SQLite used for permanent storage etc.
+simple SQLite is used for permanent storage etc.
 
 ## Thanks
 Special thanks to Redi (without the s) for the help!
