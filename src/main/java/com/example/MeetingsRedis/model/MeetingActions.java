@@ -15,12 +15,4 @@ public enum MeetingActions {
         return value;
     }
 
-    public static MeetingActions fromValue(int value) {
-        for (MeetingActions action : values()) {
-            if (action.value == value) {
-                return action;
-            }
-        }
-        throw new IllegalArgumentException("Invalid MeetingActions value: " + value);
-    }
 }

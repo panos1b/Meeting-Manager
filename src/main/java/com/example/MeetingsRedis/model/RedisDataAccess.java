@@ -7,7 +7,6 @@ import redis.clients.jedis.args.GeoUnit;
 import redis.clients.jedis.params.GeoSearchParam;
 import redis.clients.jedis.resps.GeoRadiusResponse;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -139,13 +138,13 @@ public class RedisDataAccess {
     // users in meeting from ID
     public static List<String> inMeeting(@NotNull Jedis jedis, int meetingID){
         Set<String> temp = jedis.smembers("mt_participants_" + meetingID);
-        return new ArrayList<String>(temp);
+        return new ArrayList<>(temp);
     }
 
     // users in meeting from ID
     public static List<String> inMeeting(@NotNull Jedis jedis, String meetingID){
         Set<String> temp = jedis.smembers("mt_participants_" + meetingID);
-        return new ArrayList<String>(temp);
+        return new ArrayList<>(temp);
     }
 
     // find nearby meetings
@@ -238,7 +237,7 @@ public class RedisDataAccess {
                 System.err.println("INTEGER NOT PARSED! runningMeetings");
             }
         }
-        return new ArrayList<Integer>(intIds);
+        return new ArrayList<>(intIds);
     }
 
     //end meeting and return logs for storage [6]
