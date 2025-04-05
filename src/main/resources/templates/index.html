@@ -104,7 +104,7 @@
                     <h5 class="card-title">Join a Meeting</h5>
                     <form action="/join" method="post">
                         <div class="mb-3">
-                            <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                            <input type="email" class="form-control prefill-email" name="email" placeholder="Your Email" required>
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control" name="meetingId" placeholder="Meeting ID" required>
@@ -122,7 +122,7 @@
                     <h5 class="card-title">Leave a Meeting</h5>
                     <form action="/leave" method="post">
                         <div class="mb-3">
-                            <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                            <input type="email" class="form-control prefill-email" name="email" placeholder="Your Email" required>
                         </div>
                         <div class="mb-3">
                             <input type="text" class="form-control" name="meetingId" placeholder="Meeting ID" required>
@@ -154,19 +154,22 @@
 
 <div th:replace="~{fragments/footer :: scripts}"></div>
 <script>
+const emailInputs = document.querySelectorAll('.prefill-email');
 
-    // Store email in local storage to avoid re-entering
-    const emailInput = document.getElementById('email');
+const savedEmail = localStorage.getItem('email');
+if (savedEmail) {
+    emailInputs.forEach(input => input.value = savedEmail);
+}
 
-    // Restore email from localStorage if available
-    if(localStorage.getItem('email')) {
-        emailInput.value = localStorage.getItem('email');
-    }
-
-    // Save email to localStorage when form is submitted
-    document.querySelector('form').addEventListener('submit', function() {
-        localStorage.setItem('email', emailInput.value);
+document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', function() {
+        const emailInput = form.querySelector('.prefill-email');
+        if (emailInput) {
+            localStorage.setItem('email', emailInput.value);
+        }
     });
+});
+
 </script>
 </body>
 </html>
