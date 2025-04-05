@@ -2,11 +2,7 @@ package com.example.MeetingsRedis.controler;
 
 import com.example.MeetingsRedis.model.*;
 import com.example.MeetingsRedis.tasks.RedisRefresh;
-
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-
+import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import redis.clients.jedis.Jedis;
 
 import java.sql.SQLException;
@@ -137,12 +132,12 @@ public class MainController {
 
     //Create Meeting Card
     @PostMapping("/create-meeting")
-    public String createMeeting(@RequestParam String title,
-                                @RequestParam String description,
+    public String createMeeting(@RequestParam @NotNull @NotEmpty String title,
+                                @RequestParam @NotNull @NotEmpty String description,
                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTime,
                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime,
-                                @RequestParam double lat,
-                                @RequestParam double lon,
+                                @RequestParam @Min(-90) @Max(90) double lat,
+                                @RequestParam @Min(-180) @Max(180) double lon,
                                 RedirectAttributes redirectAttributes) {
 
 
@@ -161,10 +156,10 @@ public class MainController {
 
     // Create User Card
     @PostMapping("/create-user")
-    public String createUser(@RequestParam String email,
-                             @RequestParam String name,
-                             @RequestParam int age,
-                             @RequestParam String gender,
+    public String createUser(@RequestParam @Email(message = "Invalid email format") String email,
+                             @RequestParam @NotNull @NotEmpty String name,
+                             @RequestParam @Min(0) @Max(125) int age,
+                             @RequestParam @Pattern(regexp = "^(Male|Female|Other)$") String gender,
                              RedirectAttributes redirectAttributes) {
         User user = new User(email, name, age, gender);
         try {

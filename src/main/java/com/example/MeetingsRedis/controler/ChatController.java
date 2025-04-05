@@ -2,6 +2,8 @@ package com.example.MeetingsRedis.controler;
 import com.example.MeetingsRedis.model.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +32,9 @@ public class ChatController {
 
     @PostMapping("/create-message")
     public String postMessage(
-            @RequestParam String messageBody,
+            @RequestParam @NotEmpty @NotNull String messageBody,
             @RequestParam @Email String email,
-            @RequestParam  int meetingID,
+            @RequestParam  @Min(0) int meetingID,
             RedirectAttributes redirectAttributes
 
     ) {

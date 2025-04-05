@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="~{fragments/head :: head('Page Title')}"></head>
 <body class="bg-light">
 <div th:replace="~{fragments/nav :: navbar}"></div>
@@ -34,11 +34,11 @@
                         </div>
                         <div class="mb-3">
                             <input type="number" step="any" class="form-control" name="lat" placeholder="Latitude"
-                                   required>
+                                   min="-90" max="90" required>
                         </div>
                         <div class="mb-3">
                             <input type="number" step="any" class="form-control" name="lon" placeholder="Longitude"
-                                   required>
+                                   min="-180" max="180" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Create Meeting</button>
                     </form>
@@ -85,11 +85,11 @@
                     <form action="/active-meetings" method="get">
                         <div class="mb-3">
                             <input type="number" step="any" class="form-control" placeholder="Latitude" name="lat"
-                                   required>
+                                   min="-90" max="90" required>
                         </div>
                         <div class="mb-3">
                             <input type="number" step="any" class="form-control" placeholder="Longitude" name="lng"
-                                   required>
+                                   min="-180" max="180" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Search</button>
                     </form>
