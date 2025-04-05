@@ -58,17 +58,55 @@
                     </div>
                 </div>
 
-                <!-- Error Details Section (collapsible) -->
+
                 <div class="error-details p-4">
-                    <a class="d-flex align-items-center text-decoration-none"
+                    <a class="d-flex align-items-center text-decoration-none mb-3"
                        data-bs-toggle="collapse"
                        href="#errorDetails"
-                       role="button">
+                       role="button"
+                       aria-expanded="false"
+                       aria-controls="errorDetails">
                         <i class="fas fa-info-circle me-2"></i>
-                        <span class="fw-bold">Error Details</span>
+                        <span class="fw-bold">Show Error Details</span>
                     </a>
+                    <div class="collapse" id="errorDetails">
+                        <div class="card card-body bg-white">
+                            <dl class="row mb-0">
+                                <dt class="col-sm-3">Timestamp</dt>
+                                <dd class="col-sm-9" th:text="${timestamp}">N/A</dd>
 
+                                <dt class="col-sm-3">Status Code</dt>
+                                <dd class="col-sm-9" th:text="${status}">N/A</dd>
+
+                                <dt class="col-sm-3">Error Type</dt>
+                                <dd class="col-sm-9" th:text="${error}">N/A</dd>
+
+                                <dt class="col-sm-3">Message</dt>
+                                <dd class="col-sm-9" th:text="${message}">No message</dd>
+
+                                <dt class="col-sm-3">Request Path</dt>
+                                <dd class="col-sm-9" th:text="${path}">N/A</dd>
+
+                                <dt class="col-sm-3">Stack Trace</dt>
+                                <dd class="col-sm-9">
+                                    <pre th:text="${stackTrace}" class="text-danger small overflow-auto" style="max-height: 300px;"></pre>
+                                </dd>
+
+                                <dt class="col-sm-3">Caused By</dt>
+                                <dd class="col-sm-9" th:text="${rootCause}">N/A</dd>
+
+                                <dt class="col-sm-3">More Info</dt>
+                                <dd class="col-sm-9">If your error is "Caused By" a IllegalArgumentException or
+                                    NullPointerException whilts filling out a form: This means you made
+                                    a mistake with your inputs. Make sure meeting ID is correct and the
+                                    email refer to an existent user.
+                                </dd>
+
+                            </dl>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
