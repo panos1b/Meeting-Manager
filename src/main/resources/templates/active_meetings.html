@@ -26,7 +26,7 @@
                                     <small th:text="${#temporals.format(meeting.startTime, 'MMMM d, yyyy ''at'' h:mm a')}">Start
                                         Time</small>
                                     <p class="mb-1" th:text="${meeting.description}">Meeting Description</p>
-                                    <div class="d-flex justify-content-between small gap-1">
+                                    <div class="d-flex small gap-1">
                                         <span>Id: <span th:text="${meeting.meetingID}">ID</span></span>
                                         <span>| Ends: <span
                                                 th:text="${#temporals.format(meeting.endTime, 'MMMM d, yyyy ''at'' h:mm a')}">
